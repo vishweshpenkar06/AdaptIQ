@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Navbar } from '@/components/navbar';
 import { StatCard } from '@/components/stat-card';
 import { ConceptCard } from '@/components/concept-card';
+import { LearningInsightCard } from '@/components/learning-insight-card';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -172,7 +173,28 @@ export default function DashboardPage() {
       }
 
       if (hindsightResponse.ok) {
-        setRecurringMistakes(hindsightData.failure_count_per_concept ?? []);
+        const conceptNameById = new Map(concepts.map((concept) => [concept.id, concept.name]));
+        const normalizedRecurringMistakes = ((hindsightData.failure_count_per_concept ?? []) as Array<{
+          conceptId?: string;
+          conceptName?: string;
+          count?: number;
+        }>)
+          .map((item) => {
+            const fallbackName = item.conceptId ? conceptNameById.get(item.conceptId) : null;
+            const cleanedName = (item.conceptName ?? '').trim();
+            const conceptName = cleanedName && cleanedName.toLowerCase() !== 'unknown concept'
+              ? cleanedName
+              : (fallbackName ?? 'Concept');
+
+            return {
+              conceptId: item.conceptId ?? '',
+              conceptName,
+              count: Number(item.count ?? 0),
+            };
+          })
+          .filter((item) => item.count > 0);
+
+        setRecurringMistakes(normalizedRecurringMistakes);
       }
 
       if (concepts.length === 0) {
@@ -412,6 +434,11 @@ export default function DashboardPage() {
                 )}
               </CardContent>
             </Card>
+
+            <LearningInsightCard
+              conceptName={recurringMistakes[0]?.conceptName}
+              mistakeCount={recurringMistakes[0]?.count}
+            />
 
             {/* Suggested Next Topic */}
             {suggestedConcept && (
