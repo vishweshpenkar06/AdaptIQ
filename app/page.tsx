@@ -423,7 +423,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 {recurringMistakes.length > 0 ? (
-                  recurringMistakes.slice(0, 4).map((item) => (
+                  recurringMistakes.slice(0, 3).map((item) => (
                     <div key={item.conceptId} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
                       <span className="truncate pr-2">{item.conceptName}</span>
                       <span className="text-muted-foreground">{item.count} misses</span>
@@ -438,6 +438,7 @@ export default function DashboardPage() {
             <LearningInsightCard
               conceptName={recurringMistakes[0]?.conceptName}
               mistakeCount={recurringMistakes[0]?.count}
+              className="border-dashed"
             />
 
             {/* Suggested Next Topic */}
@@ -508,27 +509,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            {/* AI Assistant Promo */}
-            <Card className="bg-linear-to-br from-primary/5 via-secondary/5 to-primary/10 border-primary/10">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary">
-                    <Brain className="h-5 w-5 text-primary-foreground" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-foreground">AI Study Companion</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Get personalized explanations and study guidance from our AI assistant.
-                    </p>
-                    <Link href="/practice">
-                      <Button variant="secondary" size="sm" className="mt-2">
-                        Try it now
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </aside>
         </div>
       </main>

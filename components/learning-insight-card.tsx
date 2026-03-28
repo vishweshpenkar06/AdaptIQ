@@ -26,15 +26,14 @@ export function LearningInsightCard({
   return (
     <Card
       className={cn(
-        'rounded-2xl border border-border/70 bg-muted/30 py-0 shadow-sm transition-all duration-300',
-        'hover:border-border hover:bg-muted/40 hover:shadow-md',
-        'animate-in fade-in-0 zoom-in-[0.98]',
+        'rounded-2xl border border-border/60 bg-card/80 py-0 shadow-sm transition-colors',
+        'hover:bg-card',
         className,
       )}
     >
-      <CardHeader className="space-y-2 p-5 pb-2">
+      <CardHeader className="space-y-2 p-4 pb-1">
         <div className="flex items-center justify-between gap-3">
-          <CardTitle className="text-base font-semibold text-foreground sm:text-lg">
+          <CardTitle className="text-base font-semibold text-foreground">
             <span className="mr-2" aria-hidden="true">
               🧠
             </span>
@@ -49,14 +48,14 @@ export function LearningInsightCard({
         </div>
       </CardHeader>
 
-      <CardContent className="p-5 pt-1">
+      <CardContent className="p-4 pt-1">
         {hasInsight ? (
           <p className="text-sm leading-relaxed text-muted-foreground">
-            You&apos;ve struggled with{' '}
+            From your recent attempts,{' '}
             <span className="font-semibold text-foreground">{conceptName}</span>{' '}
-            in{' '}
+            appeared in{' '}
             <span className="font-semibold text-foreground">{mistakeCount}</span>{' '}
-            questions.
+            mistakes.
           </p>
         ) : (
           <p className="text-sm leading-relaxed text-muted-foreground">
